@@ -4,6 +4,15 @@
 
 [English](README.md) · [下载](https://github.com/meurz/acre/releases) · [扫描核心](https://github.com/meurz/acre-core)
 
+![Acre 展示示例目录的目录树、文件类型汇总和方块图](docs/images/overview.png)
+
+<details>
+<summary>文件夹导航与文件选中</summary>
+
+![进入 Projects 文件夹，在目录树和方块图中同步选中 app.exe](docs/images/folder-detail.png)
+
+</details>
+
 ## 功能
 
 - 管理员权限下直接读取 NTFS 文件表；普通权限下逐目录扫描。扫描过程显示进度并支持取消。
