@@ -1,0 +1,17 @@
+[package]
+name = "acre-model"
+description = "UI-independent Acre data layer: tree interfaces, scan drivers, synthetic data, and treemap layout"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+streemap = "0.1.0"
+rayon = "1.11"
+# Public scan core, pinned to a source commit for reproducible builds.
+acre-core = { git = "https://github.com/meurz/acre-core.git", rev = "64e9fb75835cc908ab2105d34a38450303362aae" }
+
+[[bin]]
+name = "model-bench"
+path = "src/bin/model-bench.rs"

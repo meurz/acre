@@ -1,0 +1,10 @@
+[package]
+name = "acre-i18n"
+description = "English and Chinese localization for Acre"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+license.workspace = true
+
+[dependencies]
+serde_json = "1"

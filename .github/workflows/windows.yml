@@ -1,0 +1,67 @@
+name: Windows
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        run: rustup toolchain install 1.98.1 --profile minimal
+      - uses: Swatinem/rust-cache@v2
+      - name: Test
+        run: ./build.ps1 -Test
+      - name: Build
+        run: ./build.ps1
+      - name: Package
+        shell: pwsh
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+          IS_TAG: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          if ($env:IS_TAG -eq 'true') {
+            ./tools/package.ps1 -Version $env:RELEASE_TAG.Substring(1)
+          } else {
+            ./tools/package.ps1
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: acre-windows-x86_64
+          path: |
+            dist/acre-*-windows-x86_64.zip
+            dist/acre-*-windows-x86_64.exe
+            dist/SHA256SUMS
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: acre-windows-x86_64
+          path: dist
+      - name: Verify checksums
+        working-directory: dist
+        run: sha256sum --check SHA256SUMS
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          files: |
+            dist/acre-*-windows-x86_64.zip
+            dist/acre-*-windows-x86_64.exe
+            dist/SHA256SUMS
