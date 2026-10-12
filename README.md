@@ -5,6 +5,15 @@ with a directory tree, an extension summary, and an interactive treemap.
 
 [简体中文](README.zh-CN.md) · [Download](https://github.com/meurz/acre/releases) · [Acre Core](https://github.com/meurz/acre-core)
 
+![Acre showing a sample folder's directory tree, file type summary, and treemap](docs/images/overview.png)
+
+<details>
+<summary>Folder navigation and file selection</summary>
+
+![Acre zoomed into the Projects folder, with app.exe selected in both the directory tree and treemap](docs/images/folder-detail.png)
+
+</details>
+
 ## Features
 
 - Scan NTFS metadata with administrator access, or enumerate directories with
